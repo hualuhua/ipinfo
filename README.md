@@ -2,7 +2,7 @@
 所定のURLにIPアドレスを投げるとRDAPi(またはNIR)とabuseipdb.comの一部の情報を引っ張ってくるアプリです。
 
 # requirement
-* python3 (3.7.4で開発)
+* python3 (3.7.4で開発)  
   modules
   * flask
   * ipwhois : https://ipwhois.readthedocs.io/en/latest/README.html
@@ -11,7 +11,9 @@
  
 # Usage
 ## アプリケーションのダウンロード
+```
 git clone git@github.com:hualuhua/ipinfo.git
+```
 
 ## abuseipdbのapikey(v2)の設定
 1. API keyを未取得の場合は以下から取得  
@@ -39,7 +41,7 @@ ec2-userのディレクトリ直下で動く想定になっているので、別
 * flask.conf
 * ipinfo.service
 
-1. unit fileの配置
+6. unit fileの配置
 記載内容に問題がなければunitfileを登録する
 ```
 sudo cp -p ipinfo.service /etc/systemd/system/
