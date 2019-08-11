@@ -2,7 +2,8 @@ from flask import Flask, jsonify, request
 from ipwhois import IPWhois
 import json
 import requests
-from config import abuseipdbkey
+
+from config import *
 
 
 def get_rdap(ipaddr):
@@ -24,10 +25,10 @@ def get_nir(ipaddr):
         return NirInfo
 
 def get_abuseipdb(ipaddr):
-    url = 'https://api.abuseipdb.com/api/v2/check'
+    url = abuseipdbcheckurl
     querystring = {
         'ipAddress': ipaddr ,
-        'maxAgeInDays': '90'
+        'maxAgeInDays': abuseipdbmaxAgeInDays
     }
     headers = {
         'Accept': 'application/json',
