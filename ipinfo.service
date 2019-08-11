@@ -1,0 +1,14 @@
+[Unit]
+Description=get ipinfo
+After=network.target
+
+[Service]
+User=ec2-user
+Group=ec2-user
+EnvironmentFile=/home/ec2-user/ipinfo/flask.conf
+WorkingDirectory=/home/ec2-user/ipinfo/
+ExecStart=/home/ec2-user/.pyenv/versions/3.7.4/bin/flask run --host=0.0.0.0
+ExecStop=for ID in `lsof -i:5000 -t` ; do kill -9 $ID ; done
+
+[Install]
+WantedBy=multi-user.target
