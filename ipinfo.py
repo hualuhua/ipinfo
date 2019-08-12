@@ -1,8 +1,6 @@
-from flask import Flask, jsonify, request
 from ipwhois import IPWhois
 import json
 import requests
-
 from config import *
 
 
@@ -35,44 +33,36 @@ def get_abuseipdb(ipaddr):
         'Key': abuseipdbkey
     }
     response = requests.request(method='GET', url=url, headers=headers, params=querystring)
-    decodedResponse = json.loads(response.text)
-
-    if decodedResponse is None:
+    abuseipdb_result = json.loads(response.text)
+    if abuseipdb_result is None :
         return 0
     else :
-        return decodedResponse
+        return abuseipdb_result
 
-app = Flask(__name__)
-
-@app.route("/get_whois/<ipaddr>", methods=["GET"])
-def get_result(ipaddr):
-    rdap_result = get_rdap(ipaddr)
-    if rdap_result is not None:
-        result = {
-            'target' : rdap_result['query'],
-            'rdap_network' : rdap_result['network']['cidr'],
-            'rdap_country' : rdap_result['network']['country'],
-            'rdap_name' : rdap_result['network']['name'],
-            'rdap_asn_network' : rdap_result['asn_cidr'],
-            'rdap_asn_country' : rdap_result['asn_country_code'],
-            'rdap_asn_description' : rdap_result['asn_description'],
-        }
+def get_ipinfo(ipaddr):
+    if get_rdap(ipaddr) is not None:
+        result = get_rdap(ipaddr)
+    elif get_nir(ipaddr) is not None:
+        result = get_rdap(ipaddr)
     else :
-        nir_result = get_nir(ipaddr)
-        if nir_result is not None:
-            result = {
-                'target' : nir_result['query'],
-                'nir_asn_network' : nir_result['asn_cidr'],
-                'nir_asn_country' : nir_result['asn_country_code'],
-                'nir_asn_description' : nir_result['asn_description'],
-            }
+        return 0
 
-    abuseipdb_result = get_abuseipdb(ipaddr)
-    if abuseipdb_result is not None:
-        result['IPDB_domain'] = abuseipdb_result['data']['domain']
-        result['IPDB_abuseConfidenceScore']=abuseipdb_result['data']['abuseConfidenceScore']
-        result['IPDB_usageType']=abuseipdb_result['data']['usageType']
-    return result, 200
+    ipaddrinfo = {
+        'target' : result['query'],
+        'network' : result['network']['cidr'],
+        'country' : result['network']['country'],
+        'name' : result['network']['name'],
+        'asn_network' : result['asn_cidr'],
+        'asn_country' : result['asn_country_code'],
+        'asn_description' : result['asn_description'],
+    }
 
-if __name__ == "__main__":
-    app.run(debug=True,host='0.0.0.0')
+    if get_abuseipdb(ipaddr) is not None :
+        abuseipdb_result = get_abuseipdb(ipaddr)
+
+        ipaddrinfo['IPDB_domain'] = abuseipdb_result['data']['domain']
+        ipaddrinfo['IPDB_abuseConfidenceScore']=abuseipdb_result['data']['abuseConfidenceScore']
+        ipaddrinfo['IPDB_usageType']=abuseipdb_result['data']['usageType']
+
+    return ipaddrinfo
+
