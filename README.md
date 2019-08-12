@@ -8,8 +8,23 @@
   * ipwhois : https://ipwhois.readthedocs.io/en/latest/README.html
   * json
   * requests
- 
+
 # Usage
+## HTML出力
+以下にブラウザなどでアクセスします  
+http://your.host.ipaddr/ipinfo/TargetIpAddr  
+ ex)http://127.0.0.1/ipinfo/8.8.8.8
+## json出力
+以下にアクセスします  
+http://your.host.ipaddr/ipinfo/json/TargetIpAddr  
+ ex)http://127.0.0.1/ipinfo/json/8.8.8.8
+## CLI
+コマンドラインから直接叩くことも可能です  
+```
+$ python3 cli.py TragetIpAddr
+```
+
+# Install
 ## アプリケーションのダウンロード
 ```
 git clone git@github.com:hualuhua/ipinfo.git
@@ -17,7 +32,8 @@ git clone git@github.com:hualuhua/ipinfo.git
 
 ## abuseipdbのapikey(v2)の設定
 1. API keyを未取得の場合は以下から取得  
-   https://www.abuseipdb.com/
+開発時点では1000query/dayまで無料です。  
+https://www.abuseipdb.com/
 
 2. config.pyに記載されるabuseipdbkeyの値を上記で取得したものに書き換える
 ```
@@ -27,15 +43,12 @@ vim config.py
 
 3. アプリケーションの実行
 ```
-python3 ipinfo.py
+python3 flaskapp.py
 ```
 
-4. リクエスト
-以下のようなURLにアクセスする  
-http://YourHostIP:5000/get_whois/RequestIP  
-ex) http://127.0.0.1:5000/get_whois/8.8.8.8
-
-5.(デーモン化したい場合)unitfileの配置
+4.unitfileの配置
+デーモンとしてsystemdに登録したい場合に実施します。  
+先に当アプリケーションを起動している場合は終了してください(ポート競合のため)。  
 unitfileで相対パスが使えない関係上、各設定ファイルに絶対パスを書いている。  
 ec2-userのディレクトリ直下で動く想定になっているので、別環境で動作させる場合は設定ファイルを書き換えること  
 * flask.conf
