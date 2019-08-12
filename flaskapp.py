@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from ipinfo import *
 
 app = Flask(__name__)
@@ -32,6 +32,40 @@ def get_result(ipaddr):
         result['IPDB_abuseConfidenceScore']=abuseipdb_result['data']['abuseConfidenceScore']
         result['IPDB_usageType']=abuseipdb_result['data']['usageType']
     return result, 200
+
+@app.route("/ipinfo/<ipaddr>", methods=["GET"])
+def get_ipinfo(ipaddr):
+    if get_rdap(ipaddr) is not None:
+        rdap_result = get_rdap(ipaddr)
+        ipaddrinfo = {
+            'target' : rdap_result['query'],
+            'network' : rdap_result['network']['cidr'],
+            'country' : rdap_result['network']['country'],
+            'name' : rdap_result['network']['name'],
+            'asn_network' : rdap_result['asn_cidr'],
+            'asn_country' : rdap_result['asn_country_code'],
+            'asn_description' : rdap_result['asn_description'],
+        }
+    
+    elif get_nir(ipaddr) is not None:
+        ipaddrinfo = {
+            'target' : nir_result['query'],
+            'nir_asn_network' : nir_result['asn_cidr'],
+            'nir_asn_country' : nir_result['asn_country_code'],
+            'nir_asn_description' : nir_result['asn_description'],
+        }
+    
+    else :
+        return 0
+    
+    if get_abuseipdb(ipaddr) is not None :
+        abuseipdb_result = get_abuseipdb(ipaddr)
+        
+        ipaddrinfo['IPDB_domain'] = abuseipdb_result['data']['domain']
+        ipaddrinfo['IPDB_abuseConfidenceScore']=abuseipdb_result['data']['abuseConfidenceScore']
+        ipaddrinfo['IPDB_usageType']=abuseipdb_result['data']['usageType']
+    
+    return render_template("ipinfo.tpl.html", ipaddrinfo = ipaddrinfo), 200
 
 if __name__ == "__main__":
     app.run(debug=True,host='0.0.0.0')
