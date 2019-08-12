@@ -1,6 +1,10 @@
 from ipinfo import * 
 import pprint
+import sys
 
-result = get_ipinfo('8.8.8.8')
+args = sys.argv
+ipaddr = args[1]
+
+result = get_ipinfo(ipaddr)
 
 print(result.items())
