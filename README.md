@@ -35,7 +35,8 @@ git clone git@github.com:hualuhua/ipinfo.git
 開発時点では1000query/dayまで無料です。  
 https://www.abuseipdb.com/
 
-2. config.pyに記載されるabuseipdbkeyの値を上記で取得したものに書き換える
+2. config.pyに記載されるabuseipdbkeyの値を上記で取得したものに書き換える  
+なお、config.pyでflaskのportを指定できるようになっているが、後述のsystemdを使う場合はunitfileに該当の設定を書かないと有効にならない点注意
 ```
 cd ipinfo
 vim config.py
