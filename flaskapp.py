@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request, render_template
 from ipinfo import *
+from config import flaskport
 
 app = Flask(__name__)
 
@@ -42,4 +43,4 @@ def output_ipinfo_html(ipaddr):
 #    return render_template("ipinfo.tpl.html", ipaddrinfo = ipaddrinfo), 200
 
 if __name__ == "__main__":
-    app.run(debug=True,host='0.0.0.0')
+    app.run(debug=True,host='0.0.0.0',port=flaskport)
