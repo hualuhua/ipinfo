@@ -1,15 +1,29 @@
 <html>
+<head>
+<meta charset="UTF-8" />
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/clipboard.js/1.5.3/clipboard.min.js"></script>
+<script>
+    $(function () {
+        var clipboard = new Clipboard('.btn');
+    });
+</script>
+</head>
+
 <body>
 IP address infomation <br>
 <table border="1">
-<tr align="left"><td>method</td><td> {{ipaddrinfo.method}}</td></tr>
-<tr align="left"><td>target </td><td> {{ipaddrinfo.target}}</td></tr>
-<tr align="left"><td>network </td><td> {{ipaddrinfo.network}}</td></tr>
-<tr align="left"><td>country </td><td> {{ipaddrinfo.country}}</td></tr>
-<tr align="left"><td>name </td><td> {{ipaddrinfo.name}}</td></tr>
-<tr align="left"><td>asn_network </td><td> {{ipaddrinfo.asn_network}}</td></tr>
-<tr align="left"><td>asn_country </td><td> {{ipaddrinfo.asn_country}}</td></tr>
-<tr align="left"><td>asn_name </td><td> {{ipaddrinfo.asn_name}}</td></tr>
+<tr align="left"><td>target</td><td><input id='target' value="{{ipaddrinfo.target}}"><button class="btn" data-clipboard-target="#target">copy</button></td></tr>
+<tr align="left"><td>network</td><td><input id='network' value="{{ipaddrinfo.network}}"><button class="btn" data-clipboard-target="#network">copy</button></td></tr>
+<tr align="left"><td>country</td><td> {{ipaddrinfo.country}}</td></tr>
+<tr align="left"><td>name </td><td><a href="https://www.google.com/search?&q={{ipaddrinfo.name}}" target="_blank">{{ipaddrinfo.name}}</a></td></tr>
+</table>
+ASN infomation <br>
+<table border="1">
+<tr align="left"><td>asn_number</td><td><input id='asn_number' value="{{ipaddrinfo.asn_number}}"><button class="btn" data-clipboard-target="#asn_number">copy</button></td></tr>
+<tr align="left"><td>asn_network</td><td><input id='asn_network' value="{{ipaddrinfo.asn_cidr}}"><button class="btn" data-clipboard-target="#asn_network">copy</button></td></tr>
+<tr align="left"><td>asn_country</td><td> {{ipaddrinfo.asn_country_code}}</td></tr>
+<tr align="left"><td>asn_description</td><td><a href="https://www.google.com/search?&q={{ipaddrinfo.asn_description}}" target="_blank">{{ipaddrinfo.asn_description}}</a></td></tr>
 </table>
 Abuse Infomation
 <table border="1">
