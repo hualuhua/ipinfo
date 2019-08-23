@@ -1,4 +1,6 @@
 from ipwhois import IPWhois
+from ipwhois.net import Net
+from ipwhois.asn import IPASN
 import json
 import requests
 from config import *
@@ -21,6 +23,16 @@ def get_nir(ipaddr):
         return 0
     else :
         return NirInfo
+
+def get_asn(ipaddr):
+    net = Net(ipaddr)
+    obj = IPASN(net)
+    AsnInfo = obj.lookup()
+
+    if AsnInfo is None:
+        return 0
+    else :
+        return AsnInfo
 
 def get_abuseipdb(ipaddr):
     url = abuseipdbcheckurl
@@ -46,16 +58,21 @@ def get_ipinfo(ipaddr):
         result = get_rdap(ipaddr)
     else :
         return 0
-
+    
     ipaddrinfo = {
         'target' : result['query'],
         'network' : result['network']['cidr'],
         'country' : result['network']['country'],
         'name' : result['network']['name'],
-        'asn_network' : result['asn_cidr'],
-        'asn_country' : result['asn_country_code'],
-        'asn_description' : result['asn_description'],
     }
+    
+    if get_asn(ipaddr) is not None:
+        asn_result = get_asn(ipaddr)
+        
+        ipaddrinfo['asn_number'] = asn_result['asn']
+        ipaddrinfo['asn_cidr'] = asn_result['asn_cidr']
+        ipaddrinfo['asn_country_code'] = asn_result['asn_country_code']
+        ipaddrinfo['asn_description'] = asn_result['asn_description']
 
     if get_abuseipdb(ipaddr) is not None :
         abuseipdb_result = get_abuseipdb(ipaddr)
