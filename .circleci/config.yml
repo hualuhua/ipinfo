@@ -4,10 +4,10 @@ executors:
   ipinfo_env:
     docker:
       - image: circleci/python
+    working_directory: ~/workspace
 
 jobs:
   build:
-    working_directory: ~/workspace
     executor: ipinfo_env
     steps:
       - run:
@@ -17,7 +17,6 @@ jobs:
           sudo pip install flask
       - checkout
   test:
-    working_directory: ~/workspace
     executor: ipinfo_env
     steps:
       - run: python flaskapp.py
@@ -29,5 +28,5 @@ workflow:
     jobs:
       - build
       - test
-        requires;
+        requires:
           - build
