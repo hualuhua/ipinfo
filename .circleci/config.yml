@@ -13,7 +13,6 @@ jobs:
     working_directory: ~/workspace
     steps:
       - checkout
-
       - run:
         command: sudo pip install ipwhois
       - run:
