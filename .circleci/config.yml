@@ -1,14 +1,22 @@
 version: 2.1
 
-jobs:
-  build:
+executors:
+  ipinfo_env:
     docker:
       - image: circleci/python
-    steps:
-      - run:
-          command: |
-            sudo pip install ipwhois
-            sudo pip install flask
-      - checkout
 
-      - run: echo "hello world"
+jobs:
+  build_env:
+    executor: ipinfo_env
+      steps:
+        - run:
+            command: |
+              sudo pip install ipwhois
+              sudo pip install flask
+            command: |
+              echo "export ABUSEIPDBKEY=8a006827cfea499d2dc1eb2be1a2c92cd686514b05a542ef2c680532797779ae054ec2a0c8d0b48f " >> $BASH_ENV
+        - checkout
+  exec_flask:
+    - run: python flaskapp.py
+      requires:
+        - build_env
