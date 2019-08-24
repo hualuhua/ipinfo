@@ -1,4 +1,4 @@
-from os
+import os
 
 abuseipdbkey = os.environ[ABUSEIPDBKEY]
 abuseipdbcheckurl = 'https://api.abuseipdb.com/api/v2/check'
