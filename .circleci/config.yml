@@ -15,11 +15,11 @@ jobs:
       - checkout
 
       - run:
-        name: Install Python modules
-        command: |
-          sudo pip install ipwhois
-          sudo pip install flask
-      - run: sudo python flaskapp.py
+        command: sudo pip install ipwhois
+      - run:
+        command: sudo pip install flask
+      - run: 
+        command: sudo python flaskapp.py
 
 #workflow:
 #  version: 2.1
