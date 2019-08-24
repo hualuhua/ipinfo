@@ -21,7 +21,7 @@ jobs:
   test:
     executor: ipinfo_env
     steps:
-      - run: sudopython flaskapp.py
+      - run: sudo python flaskapp.py
 
 workflow:
   version: 2.1
