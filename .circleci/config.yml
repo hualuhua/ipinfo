@@ -14,13 +14,12 @@ jobs:
       - run:
         name: Install Python modules
         command: |
-          sudo pip install ipwhois
-          sudo pip install flask
+          sudo pip install ipwhois flask
 
   test:
     executor: ipinfo_env
     steps:
-      - run: sudo python flaskapp.py
+      - run: sudopython flaskapp.py
 
 workflow:
   version: 2.1
