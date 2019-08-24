@@ -14,9 +14,9 @@ jobs:
 
       - run:
         name: Install Python modules
-          command: |
-            sudo pip install ipwhois
-            sudo pip install flask
+        command: |
+          sudo pip install ipwhois
+          sudo pip install flask
 
   test:
     executor: ipinfo_env
