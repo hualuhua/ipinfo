@@ -10,12 +10,13 @@ jobs:
   build:
     executor: ipinfo_env
     steps:
+      - checkout
       - run:
         name: Install Python modules
         command: |
           sudo pip install ipwhois
           sudo pip install flask
-      - checkout
+
   test:
     executor: ipinfo_env
     steps:
