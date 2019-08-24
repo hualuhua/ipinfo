@@ -6,11 +6,11 @@ jobs:
       - image: circleci/python
     steps:
       - run:
-        command: |
-          pip install flask
-          pip install ipwhois
-          pip install json
-          pip install requests
+          command: |
+            pip install flask
+            pip install ipwhois
+            pip install json
+            pip install requests
       - checkout
 
       - run: echo "hello world"
