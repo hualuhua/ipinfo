@@ -6,19 +6,32 @@ executors:
       - image: circleci/python
 
 jobs:
-  - build_env:
+  build:
+    working_directory: ~/workspace
     executor: ipinfo_env
     steps:
       - run:
+        name: Install Python modules
         command: |
           sudo pip install ipwhois
           sudo pip install flask
       - run:
+        name: Set Abuse IPDB APIkey
         command: |
           echo "export ABUSEIPDBKEY=8a006827cfea499d2dc1eb2be1a2c92cd686514b05a542ef2c680532797779ae054ec2a0c8d0b48f " >> $BASH_ENV
       - checkout
-  - exec_flask:
+  test:
+    working_directory: ~/workspace
+    executor: ipinfo_env
     steps:
       - run: python flaskapp.py
         requires:
-          - build_env
+
+workflow:
+  version: 2.1
+  build_test:
+    jobs:
+      - build
+      - test
+        requires;
+          - build
