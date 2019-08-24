@@ -8,7 +8,9 @@ executors:
 
 jobs:
   build:
-    executor: ipinfo_env
+    docker:
+      - image: circleci/python
+    working_directory: ~/workspace
     steps:
       - checkout
 
@@ -17,17 +19,4 @@ jobs:
         command: |
           sudo pip install ipwhois
           sudo pip install flask
-
-  test:
-    executor: ipinfo_env
-    steps:
       - run: sudo python flaskapp.py
-
-workflow:
-  version: 2.1
-  build_test:
-    jobs:
-      - build
-      - test:
-        requires:
-          - build
