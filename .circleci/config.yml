@@ -7,10 +7,10 @@ jobs:
     steps:
       - run:
           command: |
-            pip install flask
-            pip install ipwhois
-            pip install json
-            pip install requests
+            sudo pip install ipwhois
+            sudo pip install json
+            sudo pip install flask
+            sudo pip install requests
       - checkout
 
       - run: echo "hello world"
