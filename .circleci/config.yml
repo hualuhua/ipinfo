@@ -16,7 +16,7 @@ jobs:
           sudo pip install ipwhois
           sudo pip install flask
         environment:
-          ABUSEIPDBKEY:8a006827cfea499d2dc1eb2be1a2c92cd686514b05a542ef2c680532797779ae054ec2a0c8d0b48f
+          ABUSEIPDBKEY: 8a006827cfea499d2dc1eb2be1a2c92cd686514b05a542ef2c680532797779ae054ec2a0c8d0b48f
       - checkout
   test:
     working_directory: ~/workspace
