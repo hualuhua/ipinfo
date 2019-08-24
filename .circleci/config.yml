@@ -8,9 +8,7 @@ jobs:
       - run:
           command: |
             sudo pip install ipwhois
-            sudo pip install json
             sudo pip install flask
-            sudo pip install requests
       - checkout
 
       - run: echo "hello world"
