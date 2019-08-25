@@ -23,7 +23,6 @@ jobs:
       - run: 
           name: run app
           command: sudo python flaskapp.py &
-  #test:
   deploy:
     executor: ec2
     steps:
