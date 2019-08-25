@@ -5,7 +5,11 @@ executors:
     docker:
       - image: circleci/python
     working_directory: ~/workspace
-
+  ec2:
+    machine:
+      image: circleci/classic:edge
+    working_directory: ~/ipinfo
+    
 jobs:
   build:
     executor: ipinfo_env
@@ -21,11 +25,10 @@ jobs:
           command: sudo python flaskapp.py &
   #test:
   deploy:
-    machine:
-      image: circleci/classic:edge
+    executor: ec2
     steps:
       - add_ssh_keys:
-      - run: ssh ${USER_NAME}@${HOST_NAME} 'cd ipinfo && git pull && sudo systemctl restart ipinfo'
+      - run: ssh ${USER_NAME}@${HOST_NAME} 'git pull && sudo systemctl restart ipinfo'
 
 workflow:
   version: 2.1
