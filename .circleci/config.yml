@@ -19,13 +19,19 @@ jobs:
       - run: 
           name: run app
           command: sudo python flaskapp.py &
- # test:
-    
+  #test:
+  deploy:
+    machine:
+      image: circleci/classic:edge
+    steps:
+      - add_ssh_keys:
+      - run: ssh ${USER_NAME}@${HOST_NAME} 'cd ipinfo && git pull && sudo python flaskapp.py &'
+
 workflow:
   version: 2.1
-  build_test:
+  build_deploy:
     jobs:
       - build
-#      - test:
-#        requires:
-#          - build
+      - deploy:
+        requires:
+          - build
