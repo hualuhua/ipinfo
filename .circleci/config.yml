@@ -27,6 +27,7 @@ jobs:
   deploy:
     executor: ec2
     steps:
+      - checkout
       - add_ssh_keys:
       - run: ssh ${USER_NAME}@${HOST_NAME} 'git pull && sudo systemctl restart ipinfo'
 
