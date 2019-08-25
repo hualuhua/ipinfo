@@ -25,7 +25,7 @@ jobs:
       image: circleci/classic:edge
     steps:
       - add_ssh_keys:
-      - run: ssh ${USER_NAME}@${HOST_NAME} 'cd ipinfo && git pull && sudo python flaskapp.py &'
+      - run: ssh ${USER_NAME}@${HOST_NAME} 'cd ipinfo && git pull && sudo systemctl restart ipinfo'
 
 workflow:
   version: 2.1
