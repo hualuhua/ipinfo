@@ -18,13 +18,14 @@ jobs:
             sudo pip install flask
       - run: 
           name: run app
-          command: sudo python flaskapp.py
-
-#workflow:
-#  version: 2.1
-#  build_test:
-#    jobs:
-#      - build
+          command: sudo python flaskapp.py &
+ # test:
+    
+workflow:
+  version: 2.1
+  build_test:
+    jobs:
+      - build
 #      - test:
 #        requires:
 #          - build
