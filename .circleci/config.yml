@@ -29,6 +29,9 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
+          fingerprints:
+            - "07:f3:04:c5:41:09:50:a9:e7:19:7a:1a:f3:51:23:99"
+
       - run: ssh ${USER_NAME}@${HOST_NAME} 'git pull && sudo systemctl restart ipinfo'
 
 workflow:
