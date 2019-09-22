@@ -8,6 +8,11 @@
   * ipwhois : https://ipwhois.readthedocs.io/en/latest/README.html
   * json
   * requests
+```
+pip install --upgrade pip
+pip install flask ipwhois requests
+```
+(jsonは標準モジュール)
 
 # Usage
 ## HTML出力
